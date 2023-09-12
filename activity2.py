@@ -25,12 +25,12 @@ for file in files:
     freqs.append(data['raw_data'][200:500])
     idxs.append(data.index[200:500])
 
-def plot_hists(rows, columns, data, title):
+def plot_hists(rows, columns, data, title, bins=None):
     fig, axs = plt.subplots(rows, columns)
     counter = 0
     for row in range(rows):
         for column in range(columns):
-            axs[row, column].hist(data[counter])
+            axs[row, column].hist(data[counter], bins=bins)
             axs[row, column].set_title(title[counter])
             counter+=1
     fig.tight_layout()
@@ -47,26 +47,26 @@ def plot_lines(rows, columns, index, data, title):
     fig.tight_layout()
     plt.show()
 
-def plot_compare(axis, ref_data, data, graph):
+def plot_compare(axis, ref_data, data, graph, bins=None):
     if graph == 'hist':
-        axs[axis].hist(freqs[ref_data], color="red", alpha=0.5, label=names[ref_data])
-        axs[axis].hist(freqs[data], color="blue", alpha=0.5, label=names[data])
+        axs[axis].hist(freqs[ref_data], color="red", alpha=0.5, label=names[ref_data], bins=bins)
+        axs[axis].hist(freqs[data], color="blue", alpha=0.5, label=names[data], bins=bins)
         axs[axis].legend(loc='upper right')
     if graph == 'line':
         axs[axis].plot(idxs[ref_data], freqs[ref_data], color="red", alpha=0.5, label=names[ref_data])
         axs[axis].plot(idxs[data], freqs[data], color="blue", alpha=0.5, label=names[data])
         axs[axis].legend(loc='upper right')
 
-plot_hists(3, 3, freqs, names)
+plot_hists(3, 3, freqs, names, 30)
 plot_lines(3, 3, idxs, freqs, names)
 
 fig = plt.figure()
 gs = fig.add_gridspec(4, hspace=0)
 axs = gs.subplots(sharex=False, sharey=False)
-plot_compare(0, 0, 3, 'hist')
-plot_compare(1, 1, 4, 'hist')
-plot_compare(2, 2, 5, 'hist')
-plot_compare(3, 7, 8, 'hist')
+plot_compare(0, 0, 3, 'hist', 100)
+plot_compare(1, 1, 4, 'hist', 100)
+plot_compare(2, 2, 5, 'hist', 100)
+plot_compare(3, 7, 8, 'hist', 100)
 plt.suptitle('Comparing Histograms')
 plt.show()
 
