@@ -27,8 +27,8 @@ for file in files:
 
     ## EXTRACTING DATA
     name = file.split('\\')[-1].split('.')[0]
-    freq = data['raw_data'][200:500]
-    idx = data.index[200:500]
+    freq = data['raw_data'][150:550]
+    idx = data.index[150:550]
 
     ## STATISTICAL ANALYSIS
     array = np.array(freq)
@@ -44,7 +44,7 @@ for file in files:
 
     ## PLOTTING histograms
     plt.figure(figsize=(15,5))
-    plt.hist(freq, bins=30)
+    plt.hist(freq, bins=100)
     plt.title(f'name: {name}\nmean: {mean}\nstd: {std}', loc='center')
     #### SAVE PLOT
     plt.savefig(f'activity3\\histograms\\{name}.png')
@@ -59,4 +59,12 @@ for file in files:
     figure.suptitle(f'name: {name}\nmean: {mean}\nstd: {std}')
     figure.savefig(f'activity3\\twoPlots\\{name}.png')
 
+    ## PLOTTTING ZSCORE FREQ
+    z_scoreFreq = [(f-mean)/std for f in freq]
+    plt.figure(figsize=(15,5))
+    plt.hist(z_scoreFreq, bins=100)
+    plt.title(f'name: Z-Score {name}\nmean: {mean}\nstd: {std}', loc='center')
+    #### SAVE PLOT
+    plt.savefig(f'activity3\\z-scoreHistograms\\{name}.png')
 
+print(z_scoreFreq)
